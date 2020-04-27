@@ -1,2 +1,3 @@
-# prosperity-quest
+# Prosperity Quest
+
 💰 Powering galactic ships with prosperity 💰

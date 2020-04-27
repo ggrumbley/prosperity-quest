@@ -1,0 +1,26 @@
+{
+  "name": "prosperity-quest",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.intuit.com/ggrumbley/prosperity-quest.git",
+  "author": "gary <Gary_Grumbley@intuit.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon --exec babel-node src/index.js",
+    "build": "babel src -d dist --ignore **/*.test.js",
+    "clean": "rm -rf dist",
+    "start-compiled": "node ./dist/index.js",
+    "version": "echo $npm_package_version"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^2.3.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/node": "^7.8.7",
+    "@babel/preset-env": "^7.9.5",
+    "nodemon": "^2.0.3"
+  }
+}
