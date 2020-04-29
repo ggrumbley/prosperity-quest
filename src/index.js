@@ -7,7 +7,7 @@ const app = express();
 const server = new Server(app);
 const io = Socket.listen(server);
 
-const port = 3000;
+const port = process.env.port || 3000;
 
 const gameState = {
   players: {},
@@ -21,7 +21,7 @@ const gameState = {
   },
 }
 
-app.use(express.static(__dirname + '/client'));
+app.use(express.static(__dirname + '/jumparoo'));
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
