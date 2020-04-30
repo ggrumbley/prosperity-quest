@@ -41,7 +41,6 @@ const addOtherPlayers = (scene, playerInfo) => {
     .sprite(playerInfo.x, playerInfo.y, 'otherPlayer')
     .setOrigin(0.5, 0.5)
     .setDisplaySize(53, 40);
-
   if (playerInfo.team === 'blue') {
     otherPlayer.setTint(0x0000ff);
   } else {
@@ -61,12 +60,13 @@ const moveOtherPlayers = (scene, playerInfo) => {
   });
 };
 
+
 function preload() {
+  this.load.audio('coin', 'assets/audio/coin.wav');
   this.load.image('space', 'assets/deep-space.jpg');
   this.load.image('ship', 'assets/spaceShip.png');
   this.load.image('otherPlayer', 'assets/enemyBlack5.png');
-  this.load.image('star', 'assets/coin.png');
-  this.load.spritesheet('coin', 'assets/coin_animated.png', { frameWidth: 22, frameHeight: 22, endFrame: 4 });
+  this.load.spritesheet('coin', 'assets/coin_animated.png', { frameWidth: 22, frameHeight: 22 });
   this.load;
 }
 
@@ -77,6 +77,13 @@ function create() {
   this.add.tileSprite(0, 0, 1800, 1800, 'space');
 
   this.otherPlayers = this.physics.add.group();
+
+  this.anims.create({
+    key: 'idleCoin',
+    frames: this.anims.generateFrameNumbers('coin',{ start: 0, end: 4 }),
+    frameRate: 6,
+    repeat: -1
+  });
 
   this.socket.on('currentPlayers', (players) => {
     Object.keys(players).forEach((id) => {
@@ -114,14 +121,16 @@ function create() {
     scene.redScoreText.setText('Red: ' + scores.red);
   });
 
-  this.socket.on('starLocation', (starLocation) => {
-    if (scene.star) scene.star.destroy();
-    scene.star = scene.physics.add.sprite(starLocation.x, starLocation.y, 'coin');
+  this.socket.on('coinLocation', (coinLocation) => {
+    if (scene.coin) scene.coin.destroy();
+    scene.coin = scene.physics.add.sprite(coinLocation.x, coinLocation.y, 'coin');
+    scene.coin.anims.play('idleCoin');
     scene.physics.add.overlap(
       scene.ship,
-      scene.star,
+      scene.coin,
       () => {
-        this.socket.emit('starCollected');
+        scene.sound.play('coin');
+        this.socket.emit('coinCollected');
       },
       null,
       scene

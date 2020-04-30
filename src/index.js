@@ -2,7 +2,6 @@ import express from 'express';
 import { Server } from 'http';
 import Socket from 'socket.io';
 
-
 const app = express();
 const server = new Server(app);
 const io = Socket.listen(server);
@@ -11,7 +10,7 @@ const port = process.env.port || 3000;
 
 const gameState = {
   players: {},
-  star: {
+  coin: {
     x: Math.floor(Math.random() * 700) + 50,
     y: Math.floor(Math.random() * 500) + 50,
   },
@@ -21,7 +20,7 @@ const gameState = {
   },
 }
 
-app.use(express.static(__dirname + '/jumparoo'));
+app.use(express.static(__dirname + '/client'));
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
@@ -39,8 +38,8 @@ io.on('connection', (socket) => {
   };
   // send the players object to the new player
   socket.emit('currentPlayers', gameState.players);
-  // send the star object to the new player
-  socket.emit('starLocation', gameState.star);
+  // send the coin object to the new player
+  socket.emit('coinLocation', gameState.coin);
   // send the current scores
   socket.emit('scoreUpdate', gameState.scores);
   // update all other players of the new player
@@ -62,17 +61,18 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('playerMoved', players[socket.id]);
   });
 
-  socket.on('starCollected', () => {
-    const { players, scores, star } = gameState;
+  socket.on('coinCollected', () => {
+    const { players, scores, coin } = gameState;
     players[socket.id].team === 'red' ? scores.red += 10 : scores.blue += 10;
-    star.x = Math.floor(Math.random() * 700) + 50;
-    star.y = Math.floor(Math.random() * 500) + 50;
-    io.emit('starLocation', gameState.star);
-    io.emit('scoreUpdate', gameState.scores);
+    coin.x = Math.floor(Math.random() * 700) + 50;
+    coin.y = Math.floor(Math.random() * 500) + 50;
+    socket.broadcast.emit('coinLocation', gameState.coin);
+    socket.emit('coinLocation', gameState.coin);
+    socket.broadcast.emit('scoreUpdate', gameState.scores);
+    socket.emit('scoreUpdate', gameState.scores);
   });
 });
 
 server.listen(port, () => {
-  console.log('🚀 Listening On =========== 🚀');
-  console.log(`🚀 http://localhost:${port} 🚀`);
+  console.log(`🚀 Listening On === http://localhost:${port} === 🚀`);
 });
