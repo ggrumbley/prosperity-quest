@@ -66,10 +66,8 @@ io.on('connection', (socket) => {
     players[socket.id].team === 'red' ? scores.red += 10 : scores.blue += 10;
     coin.x = Math.floor(Math.random() * 700) + 50;
     coin.y = Math.floor(Math.random() * 500) + 50;
-    socket.broadcast.emit('coinLocation', gameState.coin);
-    socket.emit('coinLocation', gameState.coin);
-    socket.broadcast.emit('scoreUpdate', gameState.scores);
-    socket.emit('scoreUpdate', gameState.scores);
+    io.emit('coinLocation', gameState.coin);
+    io.emit('scoreUpdate', gameState.scores);
   });
 });
 
