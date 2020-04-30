@@ -6,21 +6,29 @@
   "author": "gary <Gary_Grumbley@intuit.com>",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon --exec babel-node src/index.js",
-    "build": "babel src -d dist --ignore **/*.test.js",
-    "clean": "rm -rf dist",
-    "start-compiled": "node ./dist/index.js",
+    "start": "node ./dist/index.js",
+    "dev": "concurrently npm:dev:*",
+    "dev:client": "parcel watch src/client/index.html --out-dir dist/client",
+    "dev:server": "nodemon --exec babel-node src/server/index.js",
+    "build": "npm run build:client && npm run build:server",
+    "build:server": "babel src/server -d dist",
+    "build:client": "parcel build src/client/index.html --out-dir dist/client",
+    "prebuild": "rm -rf dist",
     "version": "echo $npm_package_version"
   },
   "dependencies": {
     "express": "^4.17.1",
-    "socket.io": "^2.3.0"
+    "phaser": "^3.23.0",
+    "socket.io": "^2.3.0",
+    "socket.io-client": "^2.3.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.9.0",
     "@babel/node": "^7.8.7",
     "@babel/preset-env": "^7.9.5",
-    "nodemon": "^2.0.3"
+    "concurrently": "^5.2.0",
+    "nodemon": "^2.0.3",
+    "parcel-bundler": "^1.12.4"
   }
 }

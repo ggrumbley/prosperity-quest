@@ -1,3 +1,12 @@
+import Phaser from 'phaser';
+import io from 'socket.io-client';
+
+import coin_animated from './assets/coin_animated.png';
+import spaceShip from './assets/spaceShip.png';
+import deepSpace from './assets/deep-space.jpg';
+import enemy from './assets/enemyBlack5.png';
+import coinSound from './assets/audio/coin.wav';
+
 const config = {
   type: Phaser.AUTO,
   parent: 'phaser-example',
@@ -62,17 +71,17 @@ const moveOtherPlayers = (scene, playerInfo) => {
 
 
 function preload() {
-  this.load.audio('coin', 'assets/audio/coin.wav');
-  this.load.image('space', 'assets/deep-space.jpg');
-  this.load.image('ship', 'assets/spaceShip.png');
-  this.load.image('otherPlayer', 'assets/enemyBlack5.png');
-  this.load.spritesheet('coin', 'assets/coin_animated.png', { frameWidth: 22, frameHeight: 22 });
+  this.load.audio('coin', coinSound);
+  this.load.image('space', deepSpace);
+  this.load.image('ship', spaceShip);
+  this.load.image('otherPlayer', enemy);
+  this.load.spritesheet('coin', coin_animated, { frameWidth: 22, frameHeight: 22 });
   this.load;
 }
 
 function create() {
   const scene = this;
-  this.socket = io();
+  this.socket = io('http://localhost:3000');
 
   this.add.tileSprite(0, 0, 1800, 1800, 'space');
 

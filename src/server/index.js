@@ -20,11 +20,7 @@ const gameState = {
   },
 }
 
-app.use(express.static(__dirname + '/client'));
-
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
-});
+app.use(express.static('dist/client'));
 
 io.on('connection', (socket) => {
   console.log('a user connected');
