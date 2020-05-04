@@ -2,6 +2,15 @@
 
 💰 Powering galactic ships with prosperity 💰
 
+## Getting Started
+
+```
+# yarn
+yarn && yarn dev
+
+# npm
+npm i && npm run dev
+```
 
 ## Technology Showcase
 
