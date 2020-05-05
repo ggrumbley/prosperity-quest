@@ -1,6 +1,6 @@
 # Prosperity Quest
 
-💰 Powering galactic ships with prosperity 💰
+This project is for a TypeScript workshop. Instructions for refactoring the code to TS can be found [here](./workshop-notes.md).
 
 ## Getting Started
 
