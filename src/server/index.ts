@@ -29,13 +29,9 @@ io.on('connection', (socket) => {
   console.log('a user connected');
 
   gameState.players[socket.id] = createPlayer(socket.id);
-  // send the players object to the new player
   socket.emit('currentPlayers', gameState.players);
-  // send the coin object to the new player
   socket.emit('coinLocation', gameState.coin);
-  // send the current score
   socket.emit('scoreUpdate', gameState.score);
-  // update all other players of the new player
   socket.broadcast.emit('newPlayer', gameState.players[socket.id]);
 
   socket.on('disconnect', () => {
@@ -44,13 +40,14 @@ io.on('connection', (socket) => {
     io.emit('disconnect', socket.id);
   });
 
-  // when a player moves, update the player data
   socket.on('playerMovement', (movementData) => {
     movePlayer(socket, movementData, gameState.players);
   });
 
   socket.on('coinCollected', () => {
     collectCoin(socket, gameState);
+    io.emit('coinLocation', gameState.coin);
+    io.emit('scoreUpdate', gameState.score);
   });
 });
 
