@@ -4,7 +4,7 @@
 
 ## Getting Started
 
-```
+```sh
 # yarn
 yarn && yarn dev
 
