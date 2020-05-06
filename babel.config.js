@@ -6,6 +6,7 @@ module.exports = function (api) {
     "@babel/plugin-transform-spread",
     "@babel/proposal-class-properties",
     "@babel/proposal-object-rest-spread",
+    "const-enum",
   ];
 
   return {

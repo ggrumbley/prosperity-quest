@@ -6,7 +6,7 @@ export const createPlayer = (playerId: string): T.Player => ({
   x: Math.floor(Math.random() * 700) + 50,
   y: Math.floor(Math.random() * 500) + 50,
   playerId,
-  team: Math.floor(Math.random() * 2) == 0 ? 'red' : 'blue',
+  team: Math.floor(Math.random() * 2) == 0 ? T.Team.RED : T.Team.BLUE,
 });
 
 export const movePlayer = (socket: Socket.Socket, movementData: T.Movement, players: { [key: string]: T.Player }) => {
@@ -20,7 +20,7 @@ export const movePlayer = (socket: Socket.Socket, movementData: T.Movement, play
 
 export const collectCoin = (socket: Socket.Socket, state: T.GameState) => {
   const { players, score, coin } = state;
-  players[socket.id].team === 'red' ? score.red += 10 : score.blue += 10;
+  players[socket.id].team === T.Team.RED ? score.red += 10 : score.blue += 10;
   coin.x = Math.floor(Math.random() * 700) + 50;
   coin.y = Math.floor(Math.random() * 500) + 50;
 }

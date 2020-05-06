@@ -1,10 +1,17 @@
 
+// export type Team = 'red' | 'blue';
+
+export const enum Team {
+  RED = 'red',
+  BLUE = 'blue',
+}
+
 export interface Player {
   rotation: number;
   x: number;
   y: number;
   playerId: string;
-  team: string;
+  team: Team;
 }
 
 export interface Movement {
