@@ -11,3 +11,4 @@
 7. Update file extensions in node scripts `"dev:server": "nodemon --exec babel-node --extensions '.ts,.js' src/server/index.ts",`
 8. Notice there is a lack of types for the node libraries. We can add them with `yarn add -D @types/node @types/socket.io @types/express`
 9. Lets refactor out the socket.io listeners.
+10. Try and refactor each listener into a helper method. Checkout branch `ts-finished` to compare.
