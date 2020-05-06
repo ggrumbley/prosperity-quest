@@ -125,9 +125,9 @@ function create() {
   this.blueScoreText = this.add.text(16, 16, '', { fontSize: '32px', fill: '#0000FF' });
   this.redScoreText = this.add.text(584, 16, '', { fontSize: '32px', fill: '#FF0000' });
 
-  this.socket.on('scoreUpdate', (scores) => {
-    scene.blueScoreText.setText('Blue: ' + scores.blue);
-    scene.redScoreText.setText('Red: ' + scores.red);
+  this.socket.on('scoreUpdate', (score) => {
+    scene.blueScoreText.setText('Blue: ' + score.blue);
+    scene.redScoreText.setText('Red: ' + score.red);
   });
 
   this.socket.on('coinLocation', (coinLocation) => {
