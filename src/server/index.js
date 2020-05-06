@@ -32,13 +32,9 @@ io.on('connection', (socket) => {
     playerId: socket.id,
     team: Math.floor(Math.random() * 2) == 0 ? 'red' : 'blue',
   };
-  // send the players object to the new player
   socket.emit('currentPlayers', gameState.players);
-  // send the coin object to the new player
   socket.emit('coinLocation', gameState.coin);
-  // send the current scores
   socket.emit('scoreUpdate', gameState.scores);
-  // update all other players of the new player
   socket.broadcast.emit('newPlayer', gameState.players[socket.id]);
 
   socket.on('disconnect', () => {
@@ -47,7 +43,6 @@ io.on('connection', (socket) => {
     io.emit('disconnect', socket.id);
   });
 
-  // when a player moves, update the player data
   socket.on('playerMovement', (movementData) => {
     const { players } = gameState;
     players[socket.id].x = movementData.x;
