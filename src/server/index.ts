@@ -2,7 +2,7 @@ import express from 'express';
 import { Server } from 'http';
 import Socket from 'socket.io';
 
-import { createPlayer, movePlayer } from './listeners';
+import { createPlayer, movePlayer, collectCoin } from './listeners';
 import * as T from './types';
 
 const app = express();
@@ -50,12 +50,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('coinCollected', () => {
-    const { players, score, coin } = gameState;
-    players[socket.id].team === 'red' ? score.red += 10 : score.blue += 10;
-    coin.x = Math.floor(Math.random() * 700) + 50;
-    coin.y = Math.floor(Math.random() * 500) + 50;
-    io.emit('coinLocation', gameState.coin);
-    io.emit('scoreUpdate', gameState.score);
+    collectCoin(socket, gameState);
   });
 });
 
